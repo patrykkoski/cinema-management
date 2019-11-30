@@ -64,6 +64,13 @@ public class UserController {
         return ResponseEntity.ok(new JwtDTO(jwt));
     }
 
+    /**
+     * Method allows to register user.
+     *
+     * @param userRegisterDTO
+     * @return status 200
+     * @throws Exception
+     */
     @PostMapping(value = "/register")
     public ResponseEntity<?> registerUser(@RequestBody UserRegisterDTO userRegisterDTO) throws Exception {
         User user = new User();
