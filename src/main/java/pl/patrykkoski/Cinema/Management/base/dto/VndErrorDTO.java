@@ -1,4 +1,4 @@
-package pl.patrykkoski.Cinema.Management.users.dto;
+package pl.patrykkoski.Cinema.Management.base.dto;
 
 /**
  * Dane błędu dla warstwy transportowej.

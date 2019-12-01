@@ -16,7 +16,7 @@ import org.springframework.web.bind.annotation.RestController;
 import pl.patrykkoski.Cinema.Management.users.dto.JwtDTO;
 import pl.patrykkoski.Cinema.Management.users.dto.UserLoginDTO;
 import pl.patrykkoski.Cinema.Management.users.dto.UserRegisterDTO;
-import pl.patrykkoski.Cinema.Management.users.dto.VndErrorDTO;
+import pl.patrykkoski.Cinema.Management.base.dto.VndErrorDTO;
 import pl.patrykkoski.Cinema.Management.users.entities.User;
 import pl.patrykkoski.Cinema.Management.users.exceptions.InvalidUserRegisterException;
 import pl.patrykkoski.Cinema.Management.users.services.UserService;
