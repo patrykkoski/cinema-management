@@ -1,6 +1,7 @@
 package pl.patrykkoski.Cinema.Management.users.controllers;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
@@ -15,8 +16,11 @@ import org.springframework.web.bind.annotation.RestController;
 import pl.patrykkoski.Cinema.Management.users.dto.JwtDTO;
 import pl.patrykkoski.Cinema.Management.users.dto.UserLoginDTO;
 import pl.patrykkoski.Cinema.Management.users.dto.UserRegisterDTO;
+import pl.patrykkoski.Cinema.Management.users.dto.VndErrorDTO;
 import pl.patrykkoski.Cinema.Management.users.entities.User;
+import pl.patrykkoski.Cinema.Management.users.exceptions.InvalidUserRegisterException;
 import pl.patrykkoski.Cinema.Management.users.services.UserService;
+import pl.patrykkoski.Cinema.Management.users.validators.RegisterUserValidator;
 import pl.patrykkoski.Cinema.Management.utils.JwtUtil;
 
 /**
@@ -39,6 +43,9 @@ public class UserController {
     private BCryptPasswordEncoder bCryptPasswordEncoder;
 
     @Autowired
+    private RegisterUserValidator registerUserValidator;
+
+    @Autowired
     private JwtUtil jwtTokenUtil;
 
     /**
@@ -49,7 +56,7 @@ public class UserController {
      * @throws Exception
      */
     @PostMapping(value = "/login")
-    public ResponseEntity<?> createAuthenticationToken(@RequestBody UserLoginDTO userLoginDTO) throws Exception {
+    public ResponseEntity<?> createAuthenticationToken(@RequestBody UserLoginDTO userLoginDTO) {
 
         final UserDetails userDetails = userDetailsService.loadUserByUsername(userLoginDTO.getUsername());
         UsernamePasswordAuthenticationToken usernamePasswordAuthenticationToken =
@@ -73,14 +80,20 @@ public class UserController {
      */
     @PostMapping(value = "/register")
     public ResponseEntity<?> registerUser(@RequestBody UserRegisterDTO userRegisterDTO) throws Exception {
-        User user = new User();
-        user.setUsername(userRegisterDTO.getUsername());
-        user.setPassword(userRegisterDTO.getPassword());
-        user.setFirstname(userRegisterDTO.getFirstname());
-        user.setLastname(userRegisterDTO.getLastname());
-        user.setEmail(userRegisterDTO.getEmail());
 
-        userService.save(user);
+        try {
+            registerUserValidator.validate(userRegisterDTO);
+            User user = new User();
+            user.setUsername(userRegisterDTO.getUsername());
+            user.setPassword(userRegisterDTO.getPassword());
+            user.setFirstname(userRegisterDTO.getFirstname());
+            user.setLastname(userRegisterDTO.getLastname());
+            user.setEmail(userRegisterDTO.getEmail());
+
+            userService.save(user);
+        } catch (InvalidUserRegisterException e) {
+            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(new VndErrorDTO(userRegisterDTO.getUsername(), e.getMessage()));
+        }
 
         return ResponseEntity.ok().build();
     }
