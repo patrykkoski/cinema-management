@@ -66,7 +66,7 @@ public class WebSecurityConfiguration extends WebSecurityConfigurerAdapter{
         http.csrf().disable().headers().frameOptions().disable()
                 .and().authorizeRequests()
                 .antMatchers("/h2-console/**").permitAll()
-                .antMatchers("/public/auth/**").permitAll()
+                .antMatchers("/public/**").permitAll()
                 .anyRequest().authenticated()
                 .and().cors()
                 .and().sessionManagement()

@@ -26,7 +26,7 @@ public class Movie {
     private String director;
 
     @NotNull
-    private String imageUrl;
+    private String imageurl;
 
     public Movie() {
     }
@@ -67,7 +67,11 @@ public class Movie {
         this.director = director;
     }
 
-    public void setImageUrl(String imageUrl) {
-        this.imageUrl = imageUrl;
+    public void setImageUrl(String imageurl) {
+        this.imageurl = imageurl;
+    }
+
+    public String getImageurl() {
+        return imageurl;
     }
 }

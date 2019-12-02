@@ -15,7 +15,6 @@ import pl.patrykkoski.Cinema.Management.movies.validators.MovieValidator;
 import java.util.List;
 
 @RestController
-@RequestMapping("movies")
 public class MovieController {
 
     @Autowired
@@ -24,13 +23,19 @@ public class MovieController {
     @Autowired
     private MovieValidator movieValidator;
 
-    @GetMapping("/all")
+    @GetMapping("/public/lastMovies")
+    public List<Movie> getLastMovies() {
+
+        return movieService.findLastMovies();
+    }
+
+    @GetMapping("/movies/all")
     public List<Movie> getAllMovies() {
         return movieService.findAll();
     }
 
     @PreAuthorize("hasRole('ROLE_ADMIN')")
-    @PostMapping
+    @PostMapping("/movies")
     public ResponseEntity<?> saveMovie(@RequestBody MovieDTO movieDTO) {
         try {
             movieValidator.validate(movieDTO);

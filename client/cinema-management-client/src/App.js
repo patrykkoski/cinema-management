@@ -2,7 +2,7 @@ import React from "react";
 import Navigation from "./common/nav/Nav";
 import Mainpage from "./main/components/Mainpage";
 import Schedule from "./schedule/schedule";
-import { Route, Switch, Redirect, withRouter } from "react-router-dom";
+import { Route, Switch } from "react-router-dom";
 
 const App = () => {
   return (

@@ -12,5 +12,7 @@ public interface MovieService {
 
     List<Movie> findByTitle(String title);
 
+    List<Movie> findLastMovies();
+
     void save(Movie movie);
 }
