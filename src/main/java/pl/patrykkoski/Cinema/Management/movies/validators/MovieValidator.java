@@ -21,5 +21,8 @@ public class MovieValidator {
         if(Strings.isNullOrEmpty(movieDTO.getDirector())) {
             throw new InvalidMovieException("Director cannot be empty");
         }
+        if(Strings.isNullOrEmpty(movieDTO.getImageUrl())) {
+            throw new InvalidMovieException("Image url cannot be empty");
+        }
     }
 }

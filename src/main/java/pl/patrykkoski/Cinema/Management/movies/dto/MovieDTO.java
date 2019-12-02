@@ -10,6 +10,8 @@ public class MovieDTO {
 
     private String category;
 
+    private String imageUrl;
+
     public MovieDTO() {
     }
 
@@ -43,5 +45,13 @@ public class MovieDTO {
 
     public void setCategory(String category) {
         this.category = category;
+    }
+
+    public String getImageUrl() {
+        return imageUrl;
+    }
+
+    public void setImageUrl(String imageUrl) {
+        this.imageUrl = imageUrl;
     }
 }
