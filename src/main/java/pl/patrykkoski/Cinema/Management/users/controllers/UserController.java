@@ -17,11 +17,14 @@ import pl.patrykkoski.Cinema.Management.users.dto.JwtDTO;
 import pl.patrykkoski.Cinema.Management.users.dto.UserLoginDTO;
 import pl.patrykkoski.Cinema.Management.users.dto.UserRegisterDTO;
 import pl.patrykkoski.Cinema.Management.base.dto.VndErrorDTO;
+import pl.patrykkoski.Cinema.Management.users.entities.Role;
 import pl.patrykkoski.Cinema.Management.users.entities.User;
 import pl.patrykkoski.Cinema.Management.users.exceptions.InvalidUserRegisterException;
 import pl.patrykkoski.Cinema.Management.users.services.UserService;
 import pl.patrykkoski.Cinema.Management.users.validators.RegisterUserValidator;
 import pl.patrykkoski.Cinema.Management.utils.JwtUtil;
+
+import java.util.List;
 
 /**
  * Rest Controller provides basic auth operations
@@ -66,9 +69,10 @@ public class UserController {
         if (usernamePasswordAuthenticationToken.isAuthenticated()) {
             SecurityContextHolder.getContext().setAuthentication(usernamePasswordAuthenticationToken);
         }
+        List<Long> roleList = userService.getUserRole(userService.findByUsername(userLoginDTO.getUsername()));
 
         final String jwt = jwtTokenUtil.generateToken(userDetails);
-        return ResponseEntity.ok(new JwtDTO(jwt));
+        return ResponseEntity.ok(new JwtDTO(jwt, roleList.get(0)));
     }
 
     /**

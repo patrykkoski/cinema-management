@@ -9,7 +9,10 @@ import pl.patrykkoski.Cinema.Management.users.repositories.RoleRepository;
 import pl.patrykkoski.Cinema.Management.users.repositories.UserRepository;
 import pl.patrykkoski.Cinema.Management.users.services.UserService;
 
+import javax.persistence.EntityManager;
+import javax.persistence.PersistenceContext;
 import java.util.HashSet;
+import java.util.List;
 import java.util.Set;
 
 @Service
@@ -20,6 +23,9 @@ public class UserServiceImpl implements UserService {
 
     @Autowired
     private RoleRepository roleRepository;
+
+    @PersistenceContext
+    private EntityManager entityManager;
 
     @Autowired
     private BCryptPasswordEncoder bCryptPasswordEncoder;
@@ -36,5 +42,11 @@ public class UserServiceImpl implements UserService {
     @Override
     public User findByUsername(String username) {
         return userRepository.findByUsername(username);
+    }
+
+    @Override
+    public List<Long> getUserRole(User user) {
+        return entityManager.createQuery("select role.id from Role role join role.users user where user.id=:uid")
+                .setParameter("uid", user.getId()).getResultList();
     }
 }
