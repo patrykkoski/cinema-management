@@ -44,7 +44,8 @@ public class MovieController {
             movie.setDescription(movieDTO.getDescription());
             movie.setDirector(movieDTO.getDirector());
             movie.setCategory(movieDTO.getCategory());
-            movie.setImageUrl(movieDTO.getImageUrl());
+            movie.setImageurl(movieDTO.getImageUrl());
+            movie.setDuration(movieDTO.getDuration());
 
             movieService.save(movie);
         } catch (InvalidMovieException e) {

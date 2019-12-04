@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from "react";
 import MainpagePresentational from "./MainpagePresentational";
+import Spinner from "../../common/spinner/Spinner";
 import axios from "axios";
 
 const Mainpage = () => {
@@ -31,7 +32,7 @@ const Mainpage = () => {
       />
     );
   } else {
-    return <p>Loading...</p>;
+    return <Spinner />;
   }
 };
 

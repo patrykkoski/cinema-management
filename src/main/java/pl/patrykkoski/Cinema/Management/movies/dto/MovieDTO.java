@@ -12,6 +12,8 @@ public class MovieDTO {
 
     private String imageUrl;
 
+    private int duration;
+
     public MovieDTO() {
     }
 
@@ -53,5 +55,13 @@ public class MovieDTO {
 
     public void setImageUrl(String imageUrl) {
         this.imageUrl = imageUrl;
+    }
+
+    public int getDuration() {
+        return duration;
+    }
+
+    public void setDuration(int duration) {
+        this.duration = duration;
     }
 }

@@ -28,6 +28,9 @@ public class Movie {
     @NotNull
     private String imageurl;
 
+    @NotNull
+    private int duration;
+
     public Movie() {
     }
 
@@ -67,11 +70,19 @@ public class Movie {
         this.director = director;
     }
 
-    public void setImageUrl(String imageurl) {
+    public void setImageurl(String imageurl) {
         this.imageurl = imageurl;
     }
 
     public String getImageurl() {
         return imageurl;
+    }
+
+    public int getDuration() {
+        return duration;
+    }
+
+    public void setDuration(int duration) {
+        this.duration = duration;
     }
 }
