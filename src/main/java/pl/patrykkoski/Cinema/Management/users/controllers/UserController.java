@@ -21,7 +21,11 @@ import pl.patrykkoski.Cinema.Management.users.services.UserService;
 import pl.patrykkoski.Cinema.Management.users.validators.RegisterUserValidator;
 import pl.patrykkoski.Cinema.Management.utils.JwtUtil;
 
+import javax.servlet.http.HttpServletRequest;
+import java.util.Enumeration;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 /**
  * Rest Controller provides basic auth operations

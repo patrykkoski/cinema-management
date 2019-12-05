@@ -10,7 +10,7 @@ import UserPage from "./account/userPage/UserPage";
 
 const App = props => {
   let routes;
-  if (!props.isAuthenticated) {
+  if (props.isAuthenticated) {
     routes = (
       <Switch>
         <Route path="/" exact component={Mainpage}></Route>
