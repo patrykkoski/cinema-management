@@ -5,12 +5,12 @@ import Schedule from "./schedule/schedule";
 import { connect } from "react-redux";
 import Authentication from "./account/authentication/Authentication";
 import { Route, Switch } from "react-router-dom";
-import UserPage from "./account/userPage/userPage";
 import Spinner from "./common/spinner/Spinner";
+import UserPage from "./account/userPage/UserPage";
 
 const App = props => {
   let routes;
-  if (props.isAuthenticated) {
+  if (!props.isAuthenticated) {
     routes = (
       <Switch>
         <Route path="/" exact component={Mainpage}></Route>
