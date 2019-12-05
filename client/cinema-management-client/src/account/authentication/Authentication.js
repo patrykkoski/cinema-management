@@ -1,31 +1,39 @@
-import React from "react";
+import React, { useState } from "react";
 import { connect } from "react-redux";
 import * as actions from "../../store/actions/index";
+import AuthenticationPresentational from "./presentational/AuthenticationPresentational";
 
 const Authentication = props => {
+  const [loginValue, setLoginValue] = useState("");
+  const [loginPassword, setLoginPassword] = useState("");
+
+  const handleLoginValue = e => {
+    setLoginValue(e.target.value);
+  };
+  const handlePasswordValue = e => {
+    setLoginPassword(e.target.value);
+  };
+
+  const handleSubmit = e => {
+    e.preventDefault();
+    props.onAuth(loginValue, loginPassword);
+  };
+
   return (
-    <div>
-      <input type="text" placeholder="Login"></input>
-      <input type="text" placeholder="Password"></input>
-      <button type="submit" onClick={props.onLogin}>
-        Log in
-      </button>
+    <div className="authentication">
+      <AuthenticationPresentational
+        handleLoginValue={handleLoginValue}
+        handlePasswordValue={handlePasswordValue}
+        handleSubmit={handleSubmit}
+      />
     </div>
   );
 };
 
-const mapStateToProps = state => {
-  return {
-    isAuthenticated: state.token !== null,
-    token: state.token,
-    userRole: state.userRole
-  };
-};
-
 const mapDispatchToProps = dispatch => {
   return {
-    onLogin: () => dispatch(actions.authStart())
+    onAuth: (login, password) => dispatch(actions.auth(login, password))
   };
 };
 
-export default connect(mapStateToProps, mapDispatchToProps)(Authentication);
+export default connect(null, mapDispatchToProps)(Authentication);

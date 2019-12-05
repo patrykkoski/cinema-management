@@ -1,5 +1,16 @@
 .slide-wrapper {
   position: relative;
+  &:before {
+    content: "";
+    position: absolute;
+    z-index: 0;
+    top: 0;
+    right: 0;
+    bottom: 0;
+    left: 0;
+    background-image: linear-gradient(to bottom right, #919191, #000000);
+    opacity: 0.6;
+  }
   img {
     width: 100vw;
   }
@@ -13,12 +24,14 @@
     width: 60%;
     background: rgba(0, 0, 0, 0.2);
     padding: 20px;
+
     h2 {
       font-size: 60px;
       margin-top: 0px;
     }
     .main-slide-button {
-      background: rgb(255, 255, 255);
+      background: rgb(214, 26, 67);
+      color: white;
       border: none;
       width: 150px;
       height: 40px;
