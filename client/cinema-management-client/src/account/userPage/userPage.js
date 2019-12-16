@@ -1,4 +1,6 @@
 import React from "react";
+import { connect } from "react-redux";
+import * as actions from "../../store/actions/index";
 import "./UserPage.scss";
 
 const UserPage = props => {
@@ -9,6 +11,7 @@ const UserPage = props => {
           <li>My tickets</li>
           <li>Change password</li>
           <li>Change email</li>
+          <li onClick={props.onLogout}>Logout</li>
         </ul>
         <div className="user-page-info">
           <h2>My tickets</h2>
@@ -18,4 +21,10 @@ const UserPage = props => {
   );
 };
 
-export default UserPage;
+const mapDispatchToProps = dispatch => {
+  return {
+    onLogout: () => dispatch(actions.logout())
+  };
+};
+
+export default connect(null, mapDispatchToProps)(UserPage);

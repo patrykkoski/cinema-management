@@ -1,1 +1,8 @@
-export { authStart, auth, startLoading, stopLoading } from "./actions";
+export {
+  authStart,
+  auth,
+  startLoading,
+  stopLoading,
+  authCheckState,
+  logout
+} from "./actions";

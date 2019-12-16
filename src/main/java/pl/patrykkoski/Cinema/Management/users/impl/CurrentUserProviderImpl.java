@@ -26,12 +26,13 @@ public class CurrentUserProviderImpl implements CurrentUserProvider {
     public CurrentUserInfo getCurrentUserInfo(String token) {
 
         String jwtToken = "";
-        String username = "";
-        if(!Strings.isNullOrEmpty(token)) {
+        if (token.startsWith("Bearer ")) {
             jwtToken = token.substring(7);
-            username = jwtTokenUtil.extractUsername(jwtToken);
-        }
 
+        } else {
+            jwtToken = token;
+        }
+        String username = jwtTokenUtil.extractUsername(jwtToken);
         long roleId = userService.getUserRole(userService.findByUsername(username)).get(0);
         return new CurrentUserInfo(username, roleId);
     }

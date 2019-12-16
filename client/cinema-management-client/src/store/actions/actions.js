@@ -40,6 +40,18 @@ export const authLogout = () => {
   };
 };
 
+export const logout = () => {
+  return dispatch => {
+    if (localStorage.getItem("token")) {
+      localStorage.removeItem("token");
+    }
+    if (localStorage.getItem("role")) {
+      localStorage.removeItem("role");
+    }
+    dispatch(authLogout());
+  };
+};
+
 export const auth = (login, password) => {
   return dispatch => {
     dispatch(authStart());
@@ -62,5 +74,28 @@ export const auth = (login, password) => {
         dispatch(authFail(err));
         dispatch(stopLoading());
       });
+  };
+};
+
+export const authCheckState = token => {
+  return dispatch => {
+    if (token) {
+      dispatch(startLoading());
+      axios.defaults.headers.common["Authorization"] = `Bearer ${token}`;
+      axios
+        .get("http://localhost:8080/current")
+        .then(response => {
+          console.log(response);
+          localStorage.setItem("token", token);
+          localStorage.setItem("role", response.data.role);
+          dispatch(authSuccess(token, response.data.role));
+          dispatch(stopLoading());
+        })
+        .catch(error => {
+          dispatch(authFail(error));
+          dispatch(logout());
+          dispatch(stopLoading());
+        });
+    }
   };
 };
