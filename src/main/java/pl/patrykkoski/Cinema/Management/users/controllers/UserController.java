@@ -10,6 +10,7 @@ import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.web.bind.annotation.*;
+import pl.patrykkoski.Cinema.Management.users.dto.ChangePasswordDTO;
 import pl.patrykkoski.Cinema.Management.users.dto.JwtDTO;
 import pl.patrykkoski.Cinema.Management.users.dto.UserLoginDTO;
 import pl.patrykkoski.Cinema.Management.users.dto.UserRegisterDTO;
@@ -31,7 +32,6 @@ import java.util.Map;
  * Rest Controller provides basic auth operations
  */
 @RestController
-@RequestMapping("public/auth")
 public class UserController {
 
     @Autowired
@@ -59,7 +59,7 @@ public class UserController {
      * @return jwt token
      * @throws Exception
      */
-    @PostMapping(value = "/login")
+    @PostMapping(value = "public/auth/login")
     public ResponseEntity<?> createAuthenticationToken(@RequestBody UserLoginDTO userLoginDTO) {
 
         final UserDetails userDetails = userDetailsService.loadUserByUsername(userLoginDTO.getUsername());
@@ -83,7 +83,7 @@ public class UserController {
      * @return status 200
      * @throws Exception
      */
-    @PostMapping(value = "/register")
+    @PostMapping(value = "public/auth/register")
     public ResponseEntity<?> registerUser(@RequestBody UserRegisterDTO userRegisterDTO) throws Exception {
 
         try {
@@ -103,4 +103,15 @@ public class UserController {
         return ResponseEntity.ok().build();
     }
 
+    @PostMapping(value = "user/changePassword")
+    public ResponseEntity<?> changePassword(@RequestBody ChangePasswordDTO changePasswordDTO) {
+        User user = userService.findByUsername(changePasswordDTO.getUserName());
+        if (bCryptPasswordEncoder.matches(changePasswordDTO.getOldPassword(), user.getPassword())) {
+            user.setPassword(changePasswordDTO.getNewPassword());
+            userService.save(user);
+            return ResponseEntity.ok().build();
+        }
+
+        return ResponseEntity.status(HttpStatus.NOT_ACCEPTABLE).body("Incorrect Password");
+    }
 }

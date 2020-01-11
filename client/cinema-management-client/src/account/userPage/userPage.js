@@ -1,24 +1,109 @@
-import React from "react";
+import React, { useState } from "react";
 import { connect } from "react-redux";
 import * as actions from "../../store/actions/index";
+import axios from "axios";
 import "./UserPage.scss";
 
 const UserPage = props => {
+  const [currentPage, setCurrentPage] = useState(0);
+  const [userName, setUserName] = useState("");
+  const [oldPassword, setOldPassword] = useState("");
+  const [newPassword, setNewPassword] = useState("");
+
+  const changePassword = e => {
+    e.preventDefault();
+    axios.defaults.headers.common["Authorization"] = `Bearer ${props.token}`;
+    axios.get("http://localhost:8080/current").then(response => {
+      console.log(response.data);
+      setUserName(response.data.username);
+      let nam = response.data.username;
+      axios
+        .post("http://localhost:8080/user/changePassword", {
+          userName: nam,
+          oldPassword: oldPassword,
+          newPassword: newPassword
+        })
+        .then(response => {
+          console.log(response);
+          setNewPassword("");
+          setOldPassword("");
+          alert("Password changed");
+        })
+        .catch(err => {
+          alert("Something was wrong");
+        });
+    });
+  };
+
+  const handleOldPassword = e => {
+    setOldPassword(e.target.value);
+  };
+
+  const handleNewPassword = e => {
+    setNewPassword(e.target.value);
+  };
+
+  let renderSection;
+  let ticketsSection = <div>bileciki</div>;
+  let passwordSection = (
+    <div>
+      <h2>Change password</h2>
+      <form>
+        <input
+          type="password"
+          placeholder="Enter your current password"
+          onChange={handleOldPassword}
+          value={oldPassword}
+        ></input>
+        <br />
+        <input
+          type="password"
+          placeholder="Enter your new password"
+          onChange={handleNewPassword}
+          value={newPassword}
+        ></input>
+        <br />
+        <button onClick={changePassword}>Change password</button>
+      </form>
+    </div>
+  );
+  let emailSection = <div>email</div>;
+
+  switch (currentPage) {
+    case 0:
+      renderSection = ticketsSection;
+      break;
+    case 1:
+      renderSection = passwordSection;
+      break;
+    case 2:
+      renderSection = emailSection;
+      break;
+  }
+
+  const changePage = num => {
+    setCurrentPage(num);
+  };
+
   return (
     <div className="user-page">
       <div className="user-page-content">
         <ul>
-          <li>My tickets</li>
-          <li>Change password</li>
-          <li>Change email</li>
+          <li onClick={() => changePage(0)}>My tickets</li>
+          <li onClick={() => changePage(1)}>Change password</li>
+          <li onClick={() => changePage(2)}>Change email</li>
           <li onClick={props.onLogout}>Logout</li>
         </ul>
-        <div className="user-page-info">
-          <h2>My tickets</h2>
-        </div>
+        <div className="user-page-info">{renderSection}</div>
       </div>
     </div>
   );
+};
+
+const mapStateToProps = state => {
+  return {
+    token: state.token
+  };
 };
 
 const mapDispatchToProps = dispatch => {
@@ -27,4 +112,4 @@ const mapDispatchToProps = dispatch => {
   };
 };
 
-export default connect(null, mapDispatchToProps)(UserPage);
+export default connect(mapStateToProps, mapDispatchToProps)(UserPage);

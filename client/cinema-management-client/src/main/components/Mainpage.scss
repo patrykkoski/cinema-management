@@ -8,7 +8,7 @@
     right: 0;
     bottom: 0;
     left: 0;
-    background-image: linear-gradient(to bottom right, #919191, #000000);
+    background-image: linear-gradient(to bottom right, #000000, #00000025);
     opacity: 0.6;
   }
   img {
@@ -28,9 +28,10 @@
     h2 {
       font-size: 60px;
       margin-top: 0px;
+      color: orange;
     }
     .main-slide-button {
-      background: rgb(214, 26, 67);
+      background: orange;
       color: white;
       border: none;
       width: 150px;

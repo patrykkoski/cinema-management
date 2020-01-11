@@ -45,6 +45,11 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
+    public User findById(long id) {
+        return userRepository.findById(id);
+    }
+
+    @Override
     public List<Long> getUserRole(User user) {
         return entityManager.createQuery("select role.id from Role role join role.users user where user.id=:uid")
                 .setParameter("uid", user.getId()).getResultList();

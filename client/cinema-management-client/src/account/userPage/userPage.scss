@@ -47,8 +47,35 @@
       }
     }
     .user-page-info {
+      text-align: center;
       width: 75%;
       padding: 10px;
+    }
+    input {
+      width: 250px;
+      padding: 10px;
+      margin: 10px;
+      background: transparent;
+      border: none;
+      border-bottom: 2px solid white;
+      color: white;
+      margin-left: 0;
+      margin-right: 0;
+    }
+    button {
+      width: 250px;
+      margin: 10px 0px;
+      padding: 10px;
+      background: white;
+      color: black;
+      transition: 0.5s;
+      border: none;
+      cursor: pointer;
+    }
+    button:hover {
+      background: rgb(214, 26, 67);
+      color: white;
+      transition: 0.5s;
     }
   }
 }

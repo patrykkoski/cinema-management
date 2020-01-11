@@ -6,4 +6,6 @@ import pl.patrykkoski.Cinema.Management.users.entities.User;
 public interface UserRepository extends JpaRepository<User, Long> {
 
     User findByUsername(String username);
+
+    User findById(long id);
 }
