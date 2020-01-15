@@ -2,7 +2,7 @@ import React, { useState } from "react";
 import { connect } from "react-redux";
 import * as actions from "../../store/actions/index";
 import axios from "axios";
-import "./UserPage.scss";
+import UserPagePresentational from "./presentational/UserPagePresentational";
 
 const UserPage = props => {
   const [currentPage, setCurrentPage] = useState(0);
@@ -21,7 +21,6 @@ const UserPage = props => {
           newPassword: newPassword
         })
         .then(response => {
-          console.log(response);
           setNewPassword("");
           setOldPassword("");
           alert("Password changed");
@@ -81,16 +80,11 @@ const UserPage = props => {
   };
 
   return (
-    <div className="user-page">
-      <div className="user-page-content">
-        <ul>
-          <li onClick={() => changePage(0)}>My tickets</li>
-          <li onClick={() => changePage(1)}>Change password</li>
-          <li onClick={props.onLogout}>Logout</li>
-        </ul>
-        <div className="user-page-info">{renderSection}</div>
-      </div>
-    </div>
+    <UserPagePresentational
+      changePage={changePage}
+      onLogout={props.onLogout}
+      renderSection={renderSection}
+    />
   );
 };
 
