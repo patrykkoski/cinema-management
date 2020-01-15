@@ -1,13 +1,17 @@
 import React, { useState, useEffect } from "react";
 import MainpagePresentational from "./MainpagePresentational";
 import Spinner from "../../common/spinner/Spinner";
+import { connect } from "react-redux";
+import * as actions from "../../store/actions/index";
 import axios from "axios";
 
-const Mainpage = () => {
+const Mainpage = props => {
   const [initialMovies, setInitialMovies] = useState([]);
   useEffect(() => {
+    props.onStartLoading();
     axios.get("http://localhost:8080/public/lastMovies").then(response => {
       setInitialMovies(response.data);
+      props.onStopLoading();
     });
   }, []);
 
@@ -36,4 +40,11 @@ const Mainpage = () => {
   }
 };
 
-export default Mainpage;
+const mapDispatchToProps = dispatch => {
+  return {
+    onStartLoading: () => dispatch(actions.startLoading()),
+    onStopLoading: () => dispatch(actions.stopLoading())
+  };
+};
+
+export default connect(null, mapDispatchToProps)(Mainpage);

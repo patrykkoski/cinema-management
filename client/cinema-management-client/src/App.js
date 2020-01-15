@@ -5,9 +5,10 @@ import Schedule from "./schedule/schedule";
 import { connect } from "react-redux";
 import * as actions from "./store/actions/index";
 import Authentication from "./account/authentication/Authentication";
-import { Route, Switch } from "react-router-dom";
+import { Route, Switch, Redirect } from "react-router-dom";
 import Spinner from "./common/spinner/Spinner";
 import UserPage from "./account/userPage/UserPage";
+import Registration from "./account/registration/Registration";
 
 const App = props => {
   useEffect(() => {
@@ -21,6 +22,7 @@ const App = props => {
         <Route path="/" exact component={Mainpage}></Route>
         <Route path="/schedule" component={Schedule}></Route>
         <Route path="/account" component={UserPage}></Route>
+        <Redirect to="/account" />
       </Switch>
     );
   } else {
@@ -29,6 +31,7 @@ const App = props => {
         <Route path="/" exact component={Mainpage}></Route>
         <Route path="/schedule" component={Schedule}></Route>
         <Route path="/account" component={Authentication}></Route>
+        <Route path="/register" component={Registration}></Route>
       </Switch>
     );
   }

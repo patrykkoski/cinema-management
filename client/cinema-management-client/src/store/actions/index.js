@@ -4,5 +4,6 @@ export {
   startLoading,
   stopLoading,
   authCheckState,
-  logout
+  logout,
+  register
 } from "./actions";

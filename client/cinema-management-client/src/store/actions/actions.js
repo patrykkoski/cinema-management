@@ -99,3 +99,26 @@ export const authCheckState = token => {
     }
   };
 };
+
+export const register = userData => {
+  return dispatch => {
+    dispatch(startLoading());
+    axios
+      .post("http://localhost:8080/public/auth/register", {
+        username: userData.username,
+        password: userData.password,
+        firstname: userData.firstname,
+        lastname: userData.lastname,
+        email: userData.email
+      })
+      .then(response => {
+        console.log(response);
+        dispatch(stopLoading());
+        dispatch(auth(userData.username, userData.password));
+      })
+      .catch(err => {
+        alert(err.response.data.message);
+        dispatch(stopLoading());
+      });
+  };
+};

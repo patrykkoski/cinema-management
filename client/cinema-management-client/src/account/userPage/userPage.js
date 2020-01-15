@@ -6,7 +6,6 @@ import "./UserPage.scss";
 
 const UserPage = props => {
   const [currentPage, setCurrentPage] = useState(0);
-  const [userName, setUserName] = useState("");
   const [oldPassword, setOldPassword] = useState("");
   const [newPassword, setNewPassword] = useState("");
 
@@ -14,12 +13,10 @@ const UserPage = props => {
     e.preventDefault();
     axios.defaults.headers.common["Authorization"] = `Bearer ${props.token}`;
     axios.get("http://localhost:8080/current").then(response => {
-      console.log(response.data);
-      setUserName(response.data.username);
-      let nam = response.data.username;
+      let name = response.data.username;
       axios
         .post("http://localhost:8080/user/changePassword", {
-          userName: nam,
+          userName: name,
           oldPassword: oldPassword,
           newPassword: newPassword
         })
@@ -67,7 +64,6 @@ const UserPage = props => {
       </form>
     </div>
   );
-  let emailSection = <div>email</div>;
 
   switch (currentPage) {
     case 0:
@@ -76,8 +72,7 @@ const UserPage = props => {
     case 1:
       renderSection = passwordSection;
       break;
-    case 2:
-      renderSection = emailSection;
+    default:
       break;
   }
 
@@ -91,7 +86,6 @@ const UserPage = props => {
         <ul>
           <li onClick={() => changePage(0)}>My tickets</li>
           <li onClick={() => changePage(1)}>Change password</li>
-          <li onClick={() => changePage(2)}>Change email</li>
           <li onClick={props.onLogout}>Logout</li>
         </ul>
         <div className="user-page-info">{renderSection}</div>
