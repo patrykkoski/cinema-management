@@ -1,0 +1,31 @@
+.schedule-header {
+  padding-top: 50px;
+  width: 100%;
+  background: white;
+  overflow: auto;
+  .schedule-header-content {
+    padding-top: 20px;
+    width: 80%;
+    margin: 0 auto;
+    h2 {
+      margin-top: 0;
+    }
+    .current-date {
+      color: gray;
+      font-weight: 300;
+      font-size: 16px;
+    }
+    .schedule-day-list {
+      padding-left: 0;
+      li:first-child {
+        padding-left: 0;
+      }
+      li {
+        display: inline-block;
+        padding: 10px;
+        font-size: 20px;
+        font-weight: 500;
+      }
+    }
+  }
+}

@@ -1,0 +1,24 @@
+.movie-row {
+  width: 80%;
+  margin-left: auto;
+  margin-right: auto;
+  display: flex;
+  border-bottom: 1px solid rgb(190, 190, 190);
+  padding-bottom: 20px;
+  padding-top: 20px;
+
+  img {
+    margin-right: 25px;
+  }
+
+  .schedule-ticket {
+    margin-right: 20px;
+    padding: 15px;
+    background: #d61a43;
+    border: none;
+    border-radius: 5px;
+    font-weight: bold;
+    cursor: pointer;
+    color: white;
+  }
+}
